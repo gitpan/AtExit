@@ -40,12 +40,13 @@ if (@ARGV == 0) {
       $scope2->rmexit($_) or warn "couldn't unregister exit-sub $_!";
 
       print "*** Leaving Scope 2 ***\n";
+      #$scope2->rmexit();
     }
     print "*** Finished Scope 2 ***\n";
     print "*** Leaving Scope 1 ***\n";
 }
 print "*** Finished Scope 1 ***\n"  if (@ARGV == 0);
-
+##rmexit();
 END {
     print "*** Now performing program-exit processing ***\n";
 }

@@ -91,6 +91,13 @@
 
  HISTORY
  =======
+ 19-Jan-1999           Brad Appleton               <bradapp@enteract.com>
+ -----------------------------------------------------------------------------
+ Version 2.01
+ - rmexit may now be called (as a function or a method) with *no* arguments.
+   When this happens, *all* exit-handlers are removed!
+
+
  18-Oct-1998           Brad Appleton               <bradapp@enteract.com>
  -----------------------------------------------------------------------------
  Version 2.00

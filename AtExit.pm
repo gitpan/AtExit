@@ -11,7 +11,7 @@ package AtExit;
 
 require 5.002;
 
-$VERSION = 2.00;
+$VERSION = 2.01;
 
 =head1 NAME
 
@@ -102,8 +102,10 @@ references, each of which was returned by a previous call to
 B<atexit>. For each argument given, B<rmexit> will look in the list
 of exit-handling subroutines for the program (B<rmexit>) or the
 B<AtExit> object (C<$exitObject-E<gt>rmexit>) and remove the first
-matching entry from the list. The value returned will be the number of
-subroutines that were successfully unregistered.
+matching entry from the list. If no arguments are given,
+I<then all program or object exit-handlers are unregistered!>
+The value returned will be the number of subroutines that were
+successfully unregistered.
 
 At object destruction time, the C<DESTROY{}> subroutine in the
 B<AtExit> module iterates over the subroutine references in the
@@ -364,15 +366,22 @@ sub rmexit {
     ##
     my ($unregistered, $i) = (0, 0);
     my $exit_subs = $self->{EXIT_SUBS};
-    my $subref;
-    foreach $subref (@subrefs) {
-        next unless (ref($subref) eq 'CODE');
-        ## Iterate over the queue and remove the first match
-        for ($i = 0; $i < @$exit_subs; ++$i) {
-            if ($subref == $exit_subs->[$i]) {
-                splice(@$exit_subs, $i, 1);
-                ++$unregistered;
-                last;
+    if (@subrefs == 0) {
+        ## Remove *all* exit-handlers
+        $unregistered = scalar(@$exit_subs);
+        $exit_subs = $self->{EXIT_SUBS} = [];
+    }
+    else {
+        my $subref;
+        foreach $subref (@subrefs) {
+            next unless (ref($subref) eq 'CODE');
+            ## Iterate over the queue and remove the first match
+            for ($i = 0; $i < @$exit_subs; ++$i) {
+                if ($subref == $exit_subs->[$i]) {
+                    splice(@$exit_subs, $i, 1);
+                    ++$unregistered;
+                    last;
+                }
             }
         }
     }
