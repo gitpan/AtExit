@@ -1,0 +1,121 @@
+
+ WHAT IS THIS?
+ =============
+ This is "AtExit", a Perl5 module which exports a function name "atexit()"
+ to perform ANSI-C style exit processing for Perl5 programs.
+
+
+ AUTHORS/CONTRIBUTORS
+ ====================
+ Andrew Langmead <aml@world.std.com> (initial draft).
+
+ Brad Appleton <Brad_Appleton-GBDA001@email.mot.com> (final version).
+
+
+ COPY/REUSE POLICY
+ =================
+ Copyright (C) 1996 Andrew Langmead. All rights reserved.
+
+ AtExit is free software; you can redistribute it and/or modify it
+ under the terms of the Artistic License distributed with Perl version
+ 5.000 or (at your option) any later version. Please refer to the
+ Artistic License that came with your Perl distribution for more
+ details.
+
+ The Artistic License should have been included in your distribution of
+ Perl. It resides in the file named "Artistic" at the top-level of the
+ Perl source tree (where Perl was downloaded/unpacked -- ask your
+ system administrator if you dont know where this is).  Alternatively,
+ the current version of the Artistic License distributed with Perl can
+ be viewed on-line on the World-Wide Web (WWW) from the following URL:
+
+      http://www.perl.com/perl/misc/Artistic.html
+
+ The latest version of Perl can be obtained on the World-Wide web (WWW)
+ from the following URL:
+
+      http://www.perl.com/CPAN/src/latest.tar.gz
+
+
+ DISCLAIMER
+ ===========
+ This software is distributed in the hope that it will be useful, but
+ is provided "AS IS" WITHOUT WARRANTY OF ANY KIND, either expressed or
+ implied, INCLUDING, without limitation, the implied warranties of
+ MERCHANTABILITY and FITNESS FOR A PARTICULAR PURPOSE.
+
+ The ENTIRE RISK as to the quality and performance of the software
+ IS WITH YOU (the holder of the software).  Should the software prove
+ defective, YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR
+ CORRECTION.
+
+ IN NO EVENT WILL ANY COPYRIGHT HOLDER OR ANY OTHER PARTY WHO MAY CREATE,
+ MODIFY, OR DISTRIBUTE THE SOFTWARE BE LIABLE OR RESPONSIBLE TO YOU OR TO
+ ANY OTHER ENTITY FOR ANY KIND OF DAMAGES (no matter how awful - not even
+ if they arise from known or unknown flaws in the software).
+
+ Please refer to the Artistic License that came with your Perl
+ distribution for more details.
+
+
+ CONTENTS
+ ========
+ Please see the file named "MANIFEST" which should have been included
+ in the AtExit distribution.
+
+
+ REQUIREMENTS
+ ============
+ * Perl version 5.002 or later
+
+
+ BUILDING & INSTALLING
+ =====================
+ Please see the perl "ExtUtils::MakeMaker" manpage for how to build and
+ install using the Makefile.PL template.  In a nutshell, simply typing:
+
+      perl Makefile.PL
+
+ should build a Makefile with the usual targets like "all", "clean",
+ "test", and "install".
+
+
+ BUGS
+ ====
+ Please send all bug reports to Brad Appleton
+ <Brad_Appleton-GBDA001@email.mot.com>.
+
+
+ HISTORY
+ =======
+ 04-Sep-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ -----------------------------------------------------------------------------
+ Version 1.02
+ - Added the rmexit() function to unregister subroutines if desired.
+ - Added $EXITING and $IGNORE_WHEN_EXITING variables to control behavior
+   of atexit() during exit-processing.
+ - Tested and documented the behavior of atexit() during exit-processing.
+
+ 02-Sep-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ -----------------------------------------------------------------------------
+ Version 1.01
+ - Some minor changes to documentation and variable names at the request
+   of some comp.lang.perl.modules readers.
+
+ 27-Aug-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ -----------------------------------------------------------------------------
+ Version 1.00 posted to comp.lang.perl.modules to garner feedback, and
+ to see if the module was too trivial to merit placing on CPAN.
+ - Added sections to the manpage as recommended by Andrew Langmead.
+ - Convert "soft-refs" to subs into "hard-refs" at Andrew's recommendation.
+ - Added exit-handler arguments to atexit() at Andrew's recommendation.
+ - Changed atexit() to return a sub-ref (instead of nothing).
+
+ 26-Aug-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ -----------------------------------------------------------------------------
+ Polished up a bit for production and added documentation. Sent the result
+ to Andrew Langmead for his comments and approval.
+
+ 22-Aug-1996           Andrew Langmead   <aml@world.std.com>
+ -----------------------------------------------------------------------------
+ Initial version created.
