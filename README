@@ -2,14 +2,18 @@
  WHAT IS THIS?
  =============
  This is "AtExit", a Perl5 module which exports a function name "atexit()"
- to perform ANSI-C style exit processing for Perl5 programs.
+ to perform ANSI-C style exit processing for Perl5 programs; and a class
+ named "AtExit" to register clean-up functions for any variable-scope in
+ whicvh the AtExit object is defined.
 
 
  AUTHORS/CONTRIBUTORS
  ====================
  Andrew Langmead <aml@world.std.com> (initial draft).
 
- Brad Appleton <Brad_Appleton-GBDA001@email.mot.com> (final version).
+ Brad Appleton <bradapp@enteract.com> (Version 1.02 and 2.00).
+
+ Michael A. Chase <mchase@ix.netcom.com> (Version 2.00).
 
 
  COPY/REUSE POLICY
@@ -82,13 +86,38 @@
 
  BUGS
  ====
- Please send all bug reports to Brad Appleton
- <Brad_Appleton-GBDA001@email.mot.com>.
+ Please send all bug reports to Brad Appleton <bradapp@enteract.com>
 
 
  HISTORY
  =======
- 04-Sep-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ 18-Oct-1998           Brad Appleton               <bradapp@enteract.com>
+ -----------------------------------------------------------------------------
+ Version 2.00
+ Made the following changes based on patches contributed by Michael Chase
+ - AtExit may now be used as a class to create objects which invoke callbacks
+   whenever the AtExit object is destroyed (or goes out of scope with no
+   other references to it).
+
+ - atexit() amd rmexit() may now be invoked as functions, or as methods.
+   When invoked as methods, they operate on an object for destruction-time
+   callbacks. Otherwise they operate on the program for program-exit-time
+   callbacks.
+
+ - Added the exit_subs(), is_exiting() and ignore_when_exiting() subroutines
+   to replace the use of @AtExit::EXIT_SUBS, $AtExit::EXITING, and
+   $AtExit::IGNORE_WHEN_EXITING. Use of these three variables is now
+   deprecated in favor of these new subroutines.
+
+   Although atexit & rmexit are still exported (for backward compatibility),
+   exit_subs(), is_exiting() and ignore_when_exiting() are NOT exported
+   by default.
+
+ - $AtExit::EXITING, $AtExit::IGNORE_WHEN_EXITING, and @AtExit::EXIT_SUBS
+   are now merely aliases to a class hash/object.
+
+
+ 04-Sep-1996           Brad Appleton               <bradapp@enteract.com>
  -----------------------------------------------------------------------------
  Version 1.02
  - Added the rmexit() function to unregister subroutines if desired.
@@ -96,13 +125,13 @@
    of atexit() during exit-processing.
  - Tested and documented the behavior of atexit() during exit-processing.
 
- 02-Sep-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ 02-Sep-1996           Brad Appleton               <bradapp@enteract.com>
  -----------------------------------------------------------------------------
  Version 1.01
  - Some minor changes to documentation and variable names at the request
    of some comp.lang.perl.modules readers.
 
- 27-Aug-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ 27-Aug-1996           Brad Appleton               <bradapp@enteract.com>
  -----------------------------------------------------------------------------
  Version 1.00 posted to comp.lang.perl.modules to garner feedback, and
  to see if the module was too trivial to merit placing on CPAN.
@@ -111,11 +140,11 @@
  - Added exit-handler arguments to atexit() at Andrew's recommendation.
  - Changed atexit() to return a sub-ref (instead of nothing).
 
- 26-Aug-1996           Brad Appleton     <Brad_Appleton-GDBA001@email.mot.com>
+ 26-Aug-1996           Brad Appleton               <bradapp@enteract.com>
  -----------------------------------------------------------------------------
  Polished up a bit for production and added documentation. Sent the result
  to Andrew Langmead for his comments and approval.
 
- 22-Aug-1996           Andrew Langmead   <aml@world.std.com>
+ 22-Aug-1996           Andrew Langmead             <aml@world.std.com>
  -----------------------------------------------------------------------------
  Initial version created.

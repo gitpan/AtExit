@@ -9,35 +9,42 @@
 
 use strict;
 use diagnostics;
+
 use AtExit;
-#require AtExit; *atexit = *AtExit::atexit; *rmexit = *AtExit::rmexit;
- 
+
 sub cleanup {
     my @args = @_;
     print "cleanup() executing: args = @args\n";
 }
 
-sub weird {
-    my @args = @_;
-    print "weird() executing: args = @args\n";
-    local $_;
-    print "\tcalling atexit() during exit processing:\n";
-    $_ = atexit(\&cleanup, "This call was registered during exit processing");
-    print "\tatexit() returned " . (defined $_ ? $_ : "`undef'") . "\n";
-}
+## Register subroutines to be called when this program exits
 
-#$AtExit::IGNORE_WHEN_EXITING = 0;
 $_ = atexit(\&cleanup, "This call was registered first");
 print "first call to atexit() returned $_\n";
 
-$_ = atexit('cleanup', "This call was registered second");
+$_ = atexit("cleanup", "This call was registered second");
 print "second call to atexit() returned $_\n";
 
-$_ = atexit(\&weird, "This call was registered third");
-print "third call to atexit() returned $_\n";
+$_ = atexit("cleanup", "This call should've been unregistered by rmexit");
+rmexit($_)  or  warn "couldnt' unregister exit-sub $_!";
 
-$_ = atexit("cleanup", "This call should have been unregistered by rmexit");
-rmexit($_)  ||  warn "couldnt unregister exit-sub!";
+if (@ARGV == 0) {
+   ## Register subroutines to be called when this lexical scope is exited
+   my $scope1 = AtExit->new( \&cleanup, "Scope 1, Callback 1" );
+   {
+      ## Do the same for this nested scope
+      my $scope2 = AtExit->new;
+      $_ = $scope2->atexit( \&cleanup, "Scope 2, Callback 1" );
+      $scope1->atexit( \&cleanup, "Scope 1, Callback 2");
+      $scope2->atexit( \&cleanup, "Scope 2, Callback 2" );
+      $scope2->rmexit($_) or warn "couldn't unregister exit-sub $_!";
+
+      print "*** Leaving Scope 2 ***\n";
+    }
+    print "*** Finished Scope 2 ***\n";
+    print "*** Leaving Scope 1 ***\n";
+}
+print "*** Finished Scope 1 ***\n"  if (@ARGV == 0);
 
 END {
     print "*** Now performing program-exit processing ***\n";
