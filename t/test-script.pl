@@ -1,5 +1,5 @@
 #############################################################################
-# test.pl -- simple testing script for AtExit.pm
+# test-script.pl -- simple testing script for AtExit.pm
 #
 # Copyright (c) 1996 Andrew Langmead. All rights reserved.
 # This file is part of "AtExit". AtExit is free software;
@@ -8,7 +8,7 @@
 #############################################################################
 
 use strict;
-use diagnostics;
+use warnings;
 
 use AtExit;
 
@@ -20,10 +20,10 @@ sub cleanup {
 ## Register subroutines to be called when this program exits
 
 $_ = atexit(\&cleanup, "This call was registered first");
-print "first call to atexit() returned $_\n";
+print "first call to atexit() returned value of type ", ref($_), "\n";
 
 $_ = atexit("cleanup", "This call was registered second");
-print "second call to atexit() returned $_\n";
+print "second call to atexit() returned value of type ", ref($_), "\n";
 
 $_ = atexit("cleanup", "This call should've been unregistered by rmexit");
 rmexit($_)  or  warn "couldnt' unregister exit-sub $_!";
@@ -51,3 +51,4 @@ END {
     print "*** Now performing program-exit processing ***\n";
 }
 
+exit 0;

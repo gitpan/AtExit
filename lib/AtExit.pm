@@ -8,14 +8,15 @@
 ##############################################################################
 
 package AtExit;
+$AtExit::VERSION = '2.01_01';
+# ABSTRACT: perform exit processing for a program or object
 
 require 5.002;
 
-$VERSION = 2.01;
 
 =head1 NAME
 
-B<atexit>, B<AtExit> -- perform exit processing for a program or object
+AtExit - perform exit processing for a program or object
 
 =head1 SYNOPSIS
 
@@ -236,6 +237,13 @@ L<perlref>.  For more information on C<END{}> blocks, see
 L<perlmod/"Package Constructors and Destructors">.  See
 L<perlvar/"%SIG{expr}"> for handling abnormal program termination.
 
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 1996 by Brad Appleton.
+
+This is free software; you can redistribute it and/or modify it under
+the terms of the Artistic License 1.0.
+
 =head1 AUTHOR
 
 Andrew Langmead E<lt>aml@world.std.comE<gt> (initial draft).
@@ -246,22 +254,19 @@ Michael A. Chase E<lt>mchase@ix.netcom.comE<gt> (Version 2.00).
 
 =cut
 
-use vars qw( $VERSION
-             @ISA
-             @EXPORT
-             @EXPORT_OK
+use vars qw(
              @EXIT_SUBS
              $EXITING
              $IGNORE_WHEN_EXITING
            );
 
 use strict;
-#use diagnostics;
+use warnings;
 use Exporter;
 
-@ISA    = qw( Exporter );
-@EXPORT = qw( atexit rmexit );
-@EXPORT_OK = qw( atexit rmexit exit_subs is_exiting ignore_when_exiting );
+our @ISA    = qw( Exporter );
+our @EXPORT = qw( atexit rmexit );
+our @EXPORT_OK = qw( atexit rmexit exit_subs is_exiting ignore_when_exiting );
 
 ## Class/Package-level exit attrs
 my %EXIT_ATTRS = (
