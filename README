@@ -4,7 +4,7 @@
  This is "AtExit", a Perl5 module which exports a function name "atexit()"
  to perform ANSI-C style exit processing for Perl5 programs; and a class
  named "AtExit" to register clean-up functions for any variable-scope in
- whicvh the AtExit object is defined.
+ which the AtExit object is defined.
 
 
  AUTHORS/CONTRIBUTORS

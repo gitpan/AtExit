@@ -1,5 +1,8 @@
 Release history for Perl module AtExit
 
+2.02 2014-04-06
+    - Added a whole load of modules to SEE ALSO.
+
 2.01_01 2014-04-03
     - Created testsuite based on old test script
     - Switched to Dist::Zilla
